@@ -1,4 +1,4 @@
-import { AppColors } from "../Constants/Colors";
+import { AppColors } from "../constants/Colors";
 
 declare global {
   var AppColors: AppColors;

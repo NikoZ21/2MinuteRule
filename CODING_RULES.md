@@ -1,0 +1,58 @@
+# Coding Rules & Conventions
+
+## Global Variables
+
+- `AppColors` is available globally - **NEVER import it**
+- Declared in `src/types/global.d.ts` and assigned in `src/app/_layout.tsx`
+
+## File Structure
+
+- Components go in `src/components/`
+- Types go in `src/types/`
+- Constants go in `src/constants/`
+- Complex context providers go in `src/providers`
+
+## TypeScript Conventions
+
+- Use TypeScript interfaces for component props
+- Use `Omit<>` utility types when excluding auto-generated fields (id, createdAt)
+
+## React Native Specific
+
+- Use Expo Router for navigation
+- Keep components functional (hooks-based)
+
+## Styling
+
+- Use inline styles for simple components
+- Use StyleSheet for complex styling
+- Use AppColors for consistent theming
+
+## Import Rules
+
+- Group imports: React imports first, then libraries, then local imports
+- Use relative imports for local files
+- Don't import global variables (like AppColors)
+
+## Component Naming
+
+- Use PascalCase for component files
+- Use descriptive names that explain the component's purpose
+
+## State Management
+
+- Use Context API for global state (like HabitsContext)
+- Use useState for local component state
+- Use custom hooks for complex logic
+
+## Comments
+
+- Add comments for complex business logic
+- Avoid obvious comments
+- Document custom hooks and context providers
+
+## Error Handling
+
+- Handle async operations with try/catch
+- Provide user-friendly error messages
+- Log errors for debugging

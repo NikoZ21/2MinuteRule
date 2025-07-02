@@ -12,7 +12,7 @@ export default function TabsLayout() {
             backgroundColor: AppColors.accent,
           },
           headerTintColor: "white",
-          tabBarActiveTintColor: AppColors.accent,
+          tabBarActiveTintColor: AppColors.task2,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="add-circle" color={color} size={size} />
           ),

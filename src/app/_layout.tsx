@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import Colors from "../Constants/Colors";
+import Colors from "../constants/Colors";
 
 // Initialize global colors immediately when module loads
 global.AppColors = Colors;
