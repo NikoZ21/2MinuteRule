@@ -1,26 +1,15 @@
 import { View, Text, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
+import type Habit from "../../types/Habit";
+
 interface NewHabitCardProps {
-  title?: string;
-  category?: string;
-  icon?: string;
-  currentProgress?: number;
-  totalProgress?: number;
-  color?: string;
+  habit: Habit;
 }
 
-export default function NewHabitCard({
-  title = "Read Book",
-  category = "Skill",
-  icon = "book-open-variant",
-  currentProgress = 5,
-  totalProgress = 5,
-  color = AppColors.primary,
-}: NewHabitCardProps) {
-  const progressPercentage = (currentProgress / totalProgress) * 100;
+export default function NewHabitCard({ habit }: NewHabitCardProps) {
+  const progressPercentage =
+    (habit.currentProgress / habit.totalProgress) * 100;
 
   return (
     <View style={styles.container}>
@@ -31,15 +20,25 @@ export default function NewHabitCard({
 
       {/* Icon and Content */}
       <View style={{ flexDirection: "row" }}>
-        <View style={[styles.iconContainer, { backgroundColor: color }]}>
-          <MaterialCommunityIcons name={icon as any} size={36} color="white" />
+        <View
+          style={[styles.iconContainer, { backgroundColor: habit.iconColor }]}
+        >
+          <MaterialCommunityIcons
+            name={habit.icon as any}
+            size={36}
+            color="white"
+          />
         </View>
 
         {/* Content */}
         <View style={{ flex: 1 }}>
           <View style={styles.content}>
-            <Text style={[styles.title, { color: color }]}>{title}</Text>
-            <Text style={[styles.category, { color: color }]}>{category}</Text>
+            <Text style={[styles.title, { color: habit.iconColor }]}>
+              {habit.title}
+            </Text>
+            <Text style={[styles.category, { color: habit.iconColor }]}>
+              {habit.category}
+            </Text>
           </View>
           <View style={{ width: "100%" }}>
             <View
@@ -50,7 +49,7 @@ export default function NewHabitCard({
             >
               <Text style={styles.progressTitle}>Today</Text>
               <Text style={[styles.progressTitle]}>
-                {currentProgress}/{totalProgress}
+                {habit.currentProgress}/{habit.totalProgress}
               </Text>
             </View>
             {/* Progress Bar */}
@@ -61,7 +60,7 @@ export default function NewHabitCard({
                     styles.progressBar,
                     {
                       width: `${progressPercentage}%`,
-                      backgroundColor: color,
+                      backgroundColor: habit.iconColor,
                     },
                   ]}
                 />

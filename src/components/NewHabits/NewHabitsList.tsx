@@ -1,7 +1,11 @@
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
+
 import NewHabitCard from "./NewHabitCard";
+import NewHabitForm from "./NewHabitForm";
+import type Habit from "../../types/Habit";
 
 export default function NewHabitsList() {
+  const initialLocalStorageHabits: Habit[] = [];
   return (
     <View
       style={{
@@ -9,35 +13,15 @@ export default function NewHabitsList() {
         alignItems: "center",
       }}
     >
-      <NewHabitCard
-        color={AppColors.primary}
-        title="Read Book"
-        category="Skill"
-      />
-      <NewHabitCard
-        color={AppColors.task2}
-        title="Workout"
-        icon="dumbbell"
-        category="Skill"
-      />
-      <NewHabitCard
-        color={AppColors.task3}
-        title="Yoga"
-        icon="yoga"
-        category="Skill"
-      />
-      <NewHabitCard
-        color={AppColors.task4}
-        title="Learn french"
-        icon="android-messages"
-        category="Skill"
-      />
-      <NewHabitCard
-        color={AppColors.task5}
-        title="Playing piano"
-        icon="piano"
-        category="Skill"
-      />
+      <ScrollView style={{ width: "100%" }}>
+        {initialLocalStorageHabits?.length ? (
+          initialLocalStorageHabits.map((habit) => (
+            <NewHabitCard key={habit.id} habit={habit} />
+          ))
+        ) : (
+          <NewHabitForm />
+        )}
+      </ScrollView>
     </View>
   );
 }

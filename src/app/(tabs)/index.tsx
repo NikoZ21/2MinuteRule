@@ -1,4 +1,6 @@
+import React from "react";
 import { View, Text } from "react-native";
+
 import NewHabitsList from "../../components/NewHabits/NewHabitsList";
 
 export default function Index() {
