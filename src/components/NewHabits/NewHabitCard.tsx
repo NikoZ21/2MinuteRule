@@ -3,11 +3,46 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import type Habit from "../../types/Habit";
 
+/**
+ * Props interface for the NewHabitCard component
+ *
+ * @public
+ */
 interface NewHabitCardProps {
+  /** The habit object containing all habit data to display */
   habit: Habit;
 }
 
+/**
+ * A card component that displays habit information including icon, title, category, and progress.
+ * Features a progress bar showing current completion status and a close/delete button.
+ *
+ * @param props - The component props
+ * @param props.habit - The habit object containing title, category, icon, progress, etc.
+ * @returns A styled card displaying the habit information
+ *
+ * @example
+ * ```tsx
+ * const habit: Habit = {
+ *   id: '1',
+ *   title: 'Read Books',
+ *   category: 'Education',
+ *   icon: 'book',
+ *   iconColor: '#4A90E2',
+ *   currentProgress: 3,
+ *   totalProgress: 10
+ * };
+ *
+ * <NewHabitCard habit={habit} />
+ * ```
+ *
+ * @public
+ */
 export default function NewHabitCard({ habit }: NewHabitCardProps) {
+  /**
+   * Calculate the progress percentage based on current vs total progress
+   * @remarks Progress is calculated as (current/total) * 100, clamped between 0-100%
+   */
   const progressPercentage =
     (habit.currentProgress / habit.totalProgress) * 100;
 
@@ -24,7 +59,7 @@ export default function NewHabitCard({ habit }: NewHabitCardProps) {
           style={[styles.iconContainer, { backgroundColor: habit.iconColor }]}
         >
           <MaterialCommunityIcons
-            name={habit.icon as any}
+            name={habit.icon as keyof typeof MaterialCommunityIcons.glyphMap}
             size={36}
             color="white"
           />

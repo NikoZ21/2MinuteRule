@@ -1,9 +1,11 @@
-import React from "react";
-import { View, Text } from "react-native";
+import { useState } from "react";
+import { View } from "react-native";
 
 import NewHabitsList from "../../components/NewHabits/NewHabitsList";
 
 export default function Index() {
+  const [screen, setScreen] = useState<"newHabit" | "badHabit">("newHabit");
+
   return (
     <View
       style={{
@@ -12,16 +14,6 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text
-        style={{
-          color: AppColors.primary, // Your #4CAF50 color
-          fontSize: 24,
-          fontWeight: "bold",
-          marginBottom: 20,
-        }}
-      >
-        2 Minute Rule App
-      </Text>
       <NewHabitsList />
     </View>
   );

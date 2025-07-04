@@ -1,0 +1,36 @@
+{
+  "entryPoints": ["./src"],
+  "entryPointStrategy": "expand",
+  "out": "docs",
+  "exclude": [
+    "**/node_modules/**",
+    "**/*.test.*",
+    "**/*.spec.*",
+    "**/tests/**"
+  ],
+  "excludePrivate": true,
+  "excludeProtected": false,
+  "excludeExternals": true,
+  "includeVersion": true,
+  "sort": ["source-order"],
+  "groupOrder": [
+    "Classes",
+    "Interfaces",
+    "Type Aliases",
+    "Variables",
+    "Functions"
+  ],
+  "categorizeByGroup": true,
+  "defaultCategory": "Other",
+  "readme": "README.md",
+  "name": "2MinuteRule - React Native App Documentation",
+  "tsconfig": "./tsconfig.json",
+  "theme": "default",
+  "hideGenerator": false,
+  "searchInComments": true,
+  "validation": {
+    "notExported": true,
+    "invalidLink": true,
+    "notDocumented": false
+  }
+}

@@ -2,13 +2,15 @@ import React from "react";
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 
+const title = "2 Minute Rule App";
+
 export default function TabsLayout() {
   return (
     <Tabs>
       <Tabs.Screen
         name="index"
         options={{
-          title: "New Habits",
+          title: title,
           headerStyle: {
             backgroundColor: AppColors.accent,
           },
@@ -22,7 +24,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="badHabits"
         options={{
-          title: "Bad Habits",
+          title: title,
           headerStyle: {
             backgroundColor: "red",
           },
