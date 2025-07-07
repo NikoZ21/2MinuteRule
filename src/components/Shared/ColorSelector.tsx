@@ -1,16 +1,8 @@
+import { useMemo } from "react";
 import { FlatList, TouchableOpacity, StyleSheet } from "react-native";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 import SelectionModal from "./BaseSelector";
-
-const AVAILABLE_COLORS = [
-  AppColors.primary,
-  AppColors.task2,
-  AppColors.task3,
-  AppColors.task4,
-  AppColors.task5,
-  AppColors.accent,
-] as const;
 
 interface ColorSelectorProps {
   colorModalVisible: boolean;
@@ -25,6 +17,20 @@ export default function ColorSelector({
   selectedColor,
   setSelectedColor,
 }: ColorSelectorProps) {
+  console.log("rerender....");
+
+  // Memoize colors array - only created once when component mounts
+  const AVAILABLE_COLORS = useMemo(() => {
+    return [
+      AppColors.primary,
+      AppColors.task2,
+      AppColors.task3,
+      AppColors.task4,
+      AppColors.task5,
+      AppColors.accent,
+    ] as const;
+  }, []); // Empty dependency array = only created once
+
   return (
     <SelectionModal
       visible={colorModalVisible}

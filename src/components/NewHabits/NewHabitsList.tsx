@@ -6,36 +6,36 @@ import type Habit from "../../types/Habit";
 
 export default function NewHabitsList() {
   const initialLocalStorageHabits: Habit[] = [
-    // {
-    //   id: "1",
-    //   title: "Daily Exercise",
-    //   category: "Health",
-    //   icon: "fitness",
-    //   iconColor: AppColors.primary,
-    //   currentProgress: 0,
-    //   totalProgress: 1,
-    //   createdAt: new Date(),
-    // },
-    // {
-    //   id: "2",
-    //   title: "Read Books",
-    //   category: "Learning",
-    //   icon: "book",
-    //   iconColor: AppColors.task2,
-    //   currentProgress: 0,
-    //   totalProgress: 30,
-    //   createdAt: new Date(),
-    // },
-    // {
-    //   id: "3",
-    //   title: "Meditate",
-    //   category: "Mindfulness",
-    //   icon: "leaf",
-    //   iconColor: AppColors.task3,
-    //   currentProgress: 0,
-    //   totalProgress: 15,
-    //   createdAt: new Date(),
-    // },
+    {
+      id: "1",
+      title: "Daily Exercise",
+      category: "Health",
+      icon: "fitness",
+      iconColor: AppColors.primary,
+      currentProgress: 0,
+      totalProgress: 1,
+      createdAt: new Date(),
+    },
+    {
+      id: "2",
+      title: "Read Books",
+      category: "Learning",
+      icon: "book",
+      iconColor: AppColors.task2,
+      currentProgress: 0,
+      totalProgress: 30,
+      createdAt: new Date(),
+    },
+    {
+      id: "3",
+      title: "Meditate",
+      category: "Mindfulness",
+      icon: "leaf",
+      iconColor: AppColors.task3,
+      currentProgress: 0,
+      totalProgress: 15,
+      createdAt: new Date(),
+    },
   ];
   return (
     <ScrollView
