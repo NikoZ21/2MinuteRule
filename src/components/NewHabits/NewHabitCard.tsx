@@ -14,8 +14,8 @@ interface NewHabitCardProps {
 }
 
 /**
- * A card component that displays habit information including icon, title, category, and progress.
- * Features a progress bar showing current completion status and a close/delete button.
+ * A card component that displays habit information including icon, title, category, progress, and streak.
+ * Features a progress bar showing current completion status, daily goal indicator, and completion checkmark.
  *
  * @param props - The component props
  * @param props.habit - The habit object containing title, category, icon, progress, etc.
@@ -30,7 +30,9 @@ interface NewHabitCardProps {
  *   icon: 'book',
  *   iconColor: '#4A90E2',
  *   currentProgress: 3,
- *   totalProgress: 10
+ *   totalProgress: 10,
+ *   dailyGoal: 3,
+ *   streak: 12
  * };
  *
  * <NewHabitCard habit={habit} />
@@ -43,66 +45,88 @@ export default function NewHabitCard({ habit }: NewHabitCardProps) {
    * Calculate the progress percentage based on current vs total progress
    * @remarks Progress is calculated as (current/total) * 100, clamped between 0-100%
    */
-  const progressPercentage =
-    (habit.currentProgress / habit.totalProgress) * 100;
+  const progressPercentage = Math.min(
+    (habit.currentProgress / habit.totalProgress) * 100,
+    100
+  );
+
+  /**
+   * Check if the habit is completed for today based on daily goal
+   */
+  const isCompleted = habit.currentProgress >= habit.dailyGoal;
 
   return (
     <View style={styles.container}>
-      {/* Trash Icon in top right corner */}
-      <View style={styles.trashIconContainer}>
-        <MaterialCommunityIcons name="close" size={18} color="red" />
+      {/* Main Content Row */}
+      <View style={styles.mainRow}>
+        {/* Left Side - Icon and Content */}
+        <View style={styles.leftSection}>
+          <View
+            style={[styles.iconContainer, { backgroundColor: habit.iconColor }]}
+          >
+            <MaterialCommunityIcons
+              name={habit.icon as keyof typeof MaterialCommunityIcons.glyphMap}
+              size={32}
+              color="white"
+            />
+          </View>
+
+          <View style={styles.contentSection}>
+            <Text style={styles.title}>{habit.title}</Text>
+            <Text style={styles.category}>{habit.category}</Text>
+            <Text style={styles.dailyGoal}>
+              <MaterialCommunityIcons name="target" size={14} color="#666" />{" "}
+              {habit.dailyGoal}x daily goal
+            </Text>
+          </View>
+        </View>
+
+        {/* Right Side - Completion Status and Today Label */}
+        <View style={styles.rightSection}>
+          <View
+            style={[
+              styles.completionCircle,
+              isCompleted && styles.completedCircle,
+            ]}
+          >
+            {isCompleted && (
+              <MaterialCommunityIcons name="check" size={16} color="white" />
+            )}
+          </View>
+          <Text style={styles.todayLabel}>Today</Text>
+        </View>
       </View>
 
-      {/* Icon and Content */}
-      <View style={{ flexDirection: "row" }}>
-        <View
-          style={[styles.iconContainer, { backgroundColor: habit.iconColor }]}
-        >
-          <MaterialCommunityIcons
-            name={habit.icon as keyof typeof MaterialCommunityIcons.glyphMap}
-            size={36}
-            color="white"
-          />
+      {/* Progress Section */}
+      <View style={styles.progressSection}>
+        <View style={styles.progressHeader}>
+          <Text style={styles.progressTitle}>Today&apos;s Repetitions</Text>
+          <Text style={styles.progressText}>
+            {habit.currentProgress}/{habit.totalProgress} times
+          </Text>
         </View>
 
-        {/* Content */}
-        <View style={{ flex: 1 }}>
-          <View style={styles.content}>
-            <Text style={[styles.title, { color: habit.iconColor }]}>
-              {habit.title}
-            </Text>
-            <Text style={[styles.category, { color: habit.iconColor }]}>
-              {habit.category}
-            </Text>
-          </View>
-          <View style={{ width: "100%" }}>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              <Text style={styles.progressTitle}>Today</Text>
-              <Text style={[styles.progressTitle]}>
-                {habit.currentProgress}/{habit.totalProgress}
-              </Text>
-            </View>
-            {/* Progress Bar */}
-            <View style={styles.progressSection}>
-              <View style={styles.progressBarContainer}>
-                <View
-                  style={[
-                    styles.progressBar,
-                    {
-                      width: `${progressPercentage}%`,
-                      backgroundColor: habit.iconColor,
-                    },
-                  ]}
-                />
-              </View>
-            </View>
-          </View>
+        {/* Progress Bar */}
+        <View style={styles.progressBarContainer}>
+          <View
+            style={[
+              styles.progressBar,
+              {
+                width: `${progressPercentage}%`,
+                backgroundColor: habit.iconColor,
+              },
+            ]}
+          />
         </View>
+      </View>
+
+      {/* Bottom Section - Streak and Today */}
+      <View style={styles.bottomSection}>
+        <View style={styles.streakContainer}>
+          <MaterialCommunityIcons name="fire" size={16} color="#ea580c" />
+          <Text style={styles.streakText}>{habit.streak} day streak</Text>
+        </View>
+        <Text style={styles.todayText}>Today</Text>
       </View>
     </View>
   );
@@ -110,67 +134,103 @@ export default function NewHabitCard({ habit }: NewHabitCardProps) {
 
 const styles = StyleSheet.create({
   container: {
-    width: "80%",
+    width: "90%",
     backgroundColor: "white",
-    padding: 16,
+    padding: 20,
     borderRadius: 16,
-    elevation: 4, // Android shadow
+    elevation: 3, // Android shadow
     shadowColor: "#000", // iOS shadow
     shadowOffset: { width: 0, height: 2 }, // iOS shadow
-    shadowOpacity: 0.1, // iOS shadow
-    shadowRadius: 4, // iOS shadow
+    shadowOpacity: 0.08, // iOS shadow
+    shadowRadius: 8, // iOS shadow
     marginVertical: 8,
-    position: "relative",
   },
-  trashIconContainer: {
-    position: "absolute",
-    top: 12,
-    right: 12,
-    zIndex: 1,
+  mainRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    marginBottom: 16,
+  },
+  leftSection: {
+    flexDirection: "row",
+    flex: 1,
+    alignItems: "flex-start",
   },
   iconContainer: {
-    width: 72,
-    height: 72,
-    borderRadius: 12,
+    width: 64,
+    height: 64,
+    borderRadius: 16,
     justifyContent: "center",
     alignItems: "center",
     marginRight: 16,
   },
-  content: {
+  contentSection: {
     flex: 1,
+    justifyContent: "flex-start",
   },
   title: {
     fontSize: 18,
     fontWeight: "600",
-    // color: ,
-    marginBottom: 2,
+    color: "#1a1a1a",
+    marginBottom: 4,
   },
   category: {
     fontSize: 14,
     color: "#666",
+    marginBottom: 8,
   },
-  timeContainer: {
-    alignItems: "flex-end",
-  },
-  timeText: {
-    fontSize: 14,
+  dailyGoal: {
+    fontSize: 13,
     color: "#666",
-    fontWeight: "500",
-  },
-  progressTitle: {
-    fontSize: 12,
-    color: "#999",
-    marginTop: 8,
-    marginBottom: 4,
-  },
-  progressSection: {
     flexDirection: "row",
     alignItems: "center",
   },
+  rightSection: {
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
+  completionCircle: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    borderWidth: 2,
+    borderColor: "#e0e0e0",
+    backgroundColor: "transparent",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  completedCircle: {
+    backgroundColor: "#4CAF50",
+    borderColor: "#4CAF50",
+  },
+  todayLabel: {
+    fontSize: 12,
+    color: "#666",
+    fontWeight: "500",
+  },
+  progressSection: {
+    marginBottom: 16,
+  },
+  progressHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  progressTitle: {
+    fontSize: 13,
+    color: "#666",
+    fontWeight: "500",
+  },
+  progressText: {
+    fontSize: 13,
+    color: "#666",
+    fontWeight: "500",
+  },
   progressBarContainer: {
-    flex: 1,
-    height: 3,
-    backgroundColor: "#E0E0E0",
+    height: 6,
+    backgroundColor: "#f0f0f0",
     borderRadius: 3,
     overflow: "hidden",
   },
@@ -178,7 +238,26 @@ const styles = StyleSheet.create({
     height: "100%",
     borderRadius: 3,
   },
-  progressText: {
+  bottomSection: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  streakContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#fed7aa",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  streakText: {
+    fontSize: 12,
+    color: "#ea580c",
+    marginLeft: 4,
+    fontWeight: "500",
+  },
+  todayText: {
     fontSize: 12,
     color: "#666",
     fontWeight: "500",

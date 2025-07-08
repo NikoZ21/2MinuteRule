@@ -8,6 +8,15 @@ export const Colors = {
   task5: "#FFEB3B",
 } as const;
 
+export const AVAILABLE_COLORS = [
+  Colors.primary,
+  Colors.task2,
+  Colors.task3,
+  Colors.task4,
+  Colors.task5,
+  Colors.accent,
+] as const;
+
 export type AppColors = typeof Colors;
 
 export default Colors;
