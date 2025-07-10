@@ -4,31 +4,49 @@ import { Ionicons } from "@expo/vector-icons";
 
 export default function TabsLayout() {
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: AppColors.accent,
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="habits"
         options={{
-          title: "Good Habits",
+          title: "Habits",
           headerStyle: {
             backgroundColor: AppColors.accent,
           },
           headerTintColor: "white",
-          tabBarActiveTintColor: AppColors.task2,
+          tabBarActiveTintColor: AppColors.accent,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="add-circle" color={color} size={size} />
           ),
         }}
       />
       <Tabs.Screen
-        name="badHabits"
+        name="calendar"
         options={{
-          title: "Bad Habits",
+          title: "Calendar",
           headerStyle: {
-            backgroundColor: "red",
+            backgroundColor: AppColors.accent,
           },
           headerTintColor: "white",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="ban" color={color} size={size} />
+            <Ionicons name="calendar" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          headerStyle: {
+            backgroundColor: AppColors.accent,
+          },
+          headerTintColor: "white",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person" color={color} size={size} />
           ),
         }}
       />
