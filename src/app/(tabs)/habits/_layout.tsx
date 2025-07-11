@@ -9,7 +9,7 @@ const TopTab = createMaterialTopTabNavigator();
 
 export default function HabitsLayout() {
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <View style={{ flex: 1 }}>
       {/* Custom header space */}
       <View style={{ height: 60 }} />
 
@@ -25,7 +25,6 @@ export default function HabitsLayout() {
             shadowRadius: 8,
             borderBottomWidth: 0,
             marginHorizontal: 60,
-            marginTop: 30,
             borderRadius: 20,
             backgroundColor: "#f5f5f5",
             paddingVertical: 4,
