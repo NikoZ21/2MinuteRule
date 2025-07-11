@@ -1,6 +1,6 @@
 import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import GoodHabits from "./good";
 import BadHabits from "./bad";
@@ -17,12 +17,7 @@ export default function HabitsLayout() {
         screenOptions={{
           tabBarActiveTintColor: "#ffffff",
           tabBarInactiveTintColor: "#666",
-          tabBarIndicatorStyle: {
-            backgroundColor: AppColors.accent,
-            height: "80%",
-            borderRadius: 16,
-            marginBottom: 4,
-          },
+          tabBarIndicatorStyle: styles.tabBarIndicatorStyle,
           tabBarStyle: {
             elevation: 2,
             shadowOffset: { width: 0, height: 2 },
@@ -60,7 +55,7 @@ export default function HabitsLayout() {
           options={{
             title: "Good Habits",
             tabBarIcon: ({ color }) => (
-              <Ionicons name="add-circle" color={color} size={16} />
+              <Ionicons name="happy" color={color} size={16} />
             ),
           }}
         />
@@ -70,7 +65,7 @@ export default function HabitsLayout() {
           options={{
             title: "Bad Habits",
             tabBarIcon: ({ color }) => (
-              <Ionicons name="ban" color={color} size={16} />
+              <Ionicons name="sad" color={color} size={16} />
             ),
           }}
         />
@@ -78,3 +73,11 @@ export default function HabitsLayout() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBarIndicatorStyle: {
+    backgroundColor: "#2C2C2C",
+    height: "100%",
+    borderRadius: 16,
+  },
+});
