@@ -1,26 +1,60 @@
-import { View, Text, StyleSheet } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import NewHabitsList from "../../../components/NewHabits/NewHabitsList";
+import { StyleSheet, ScrollView } from "react-native";
+import NewHabitForm from "../../../components/NewHabits/NewHabitForm";
+import HabitCard from "../../../components/Shared/HabitCard";
+import type Habit from "../../../types/Habit";
 
 export default function GoodHabits() {
+  const initialLocalStorageHabits: Habit[] = [
+    {
+      id: "1",
+      title: "Daily Exercise",
+      category: "Health",
+      icon: "dumbbell",
+      iconColor: AppColors.primary,
+      currentProgress: 9,
+      totalProgress: 1,
+      dailyGoal: 20,
+      streak: 5,
+      createdAt: new Date(),
+    },
+    {
+      id: "2",
+      title: "Read Books",
+      category: "Learning",
+      icon: "book",
+      iconColor: AppColors.task2,
+      currentProgress: 2,
+      totalProgress: 3,
+      dailyGoal: 3,
+      streak: 12,
+      createdAt: new Date(),
+    },
+    {
+      id: "3",
+      title: "Meditate",
+      category: "Mindfulness",
+      icon: "leaf",
+      iconColor: AppColors.task3,
+      currentProgress: 0,
+      totalProgress: 2,
+      dailyGoal: 2,
+      streak: 0,
+      createdAt: new Date(),
+    },
+  ];
   return (
-    <View style={styles.container}>
-      {/* Header */}
-      {/* <View style={styles.header}>
-        <View>
-          <Text style={styles.headerTitle}>2 Minute Rule</Text>
-          <Text style={styles.headerSubtitle}>
-            Build habits, one step at a time
-          </Text>
-        </View>
-        <View style={styles.streakBadge}>
-          <MaterialCommunityIcons name="fire" size={16} color="#ea580c" />
-          <Text style={styles.streakText}>3 day streak</Text>
-        </View>
-      </View> */}
-
-      <NewHabitsList />
-    </View>
+    <ScrollView
+      style={{ width: "100%", marginVertical: 30 }}
+      contentContainerStyle={{ alignItems: "center" }}
+    >
+      {initialLocalStorageHabits?.length ? (
+        initialLocalStorageHabits.map((habit) => (
+          <HabitCard key={habit.id} habit={habit} />
+        ))
+      ) : (
+        <NewHabitForm />
+      )}
+    </ScrollView>
   );
 }
 
