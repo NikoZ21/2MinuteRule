@@ -1,13 +1,36 @@
-import { Ionicons } from "@expo/vector-icons";
-import { View, Text, StyleSheet } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
+import HabitCard from "../../../components/Shared/HabitCard";
+import type Habit from "../../../types/Habit";
+import NewHabitForm from "../../../components/NewHabits/NewHabitForm";
 
 export default function BadHabits() {
+  const initialLocalStorageHabits: Habit[] = [
+    {
+      id: "1",
+      title: "Bad Habit",
+      category: "Bad",
+      icon: "star-face",
+      iconColor: "red",
+      currentProgress: 0,
+      totalProgress: 100,
+      dailyGoal: 10,
+      streak: 0,
+      createdAt: new Date(),
+    },
+  ];
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Bad Habits</Text>
-      <Ionicons name="trash" size={24} color="red" />
-      {/* Add your bad habits content here */}
-    </View>
+    <ScrollView
+      style={{ width: "100%", marginVertical: 30 }}
+      contentContainerStyle={{ alignItems: "center" }}
+    >
+      {initialLocalStorageHabits?.length ? (
+        initialLocalStorageHabits.map((habit) => (
+          <HabitCard key={habit.id} habit={habit} />
+        ))
+      ) : (
+        <NewHabitForm />
+      )}
+    </ScrollView>
   );
 }
 

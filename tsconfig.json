@@ -3,5 +3,9 @@
   "compilerOptions": {
     "strict": true
   },
-  "include": ["**/*", "src/types/global.d.ts"]
+  "include": [
+    "**/*",
+    "src/types/global.d.ts",
+    "nativewind-env.d.ts"
+  ]
 }
