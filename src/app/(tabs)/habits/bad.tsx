@@ -1,7 +1,8 @@
-import { StyleSheet, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
+
 import HabitCard from "../../../components/Shared/HabitCard";
-import type Habit from "../../../types/Habit";
 import NewHabitForm from "../../../components/NewHabits/NewHabitForm";
+import type Habit from "../../../types/Habit";
 
 export default function BadHabits() {
   const initialLocalStorageHabits: Habit[] = [
@@ -34,14 +35,14 @@ export default function BadHabits() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     padding: 20,
+//   },
+//   title: {
+//     fontSize: 24,
+//     fontWeight: "bold",
+//     marginBottom: 20,
+//   },
+// });
