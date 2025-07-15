@@ -1,12 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  View,
-  Text,
-  Modal,
-  TouchableOpacity,
-  StyleSheet,
-  Animated,
-} from "react-native";
+import { View, Text, Modal, TouchableOpacity, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import type Habit from "../../types/Habit";
 
@@ -27,7 +20,6 @@ export default function HabitTimerModal({
 }: HabitTimerModalProps) {
   const [isRunning, setIsRunning] = useState(false);
   const [remainingTime, setRemainingTime] = useState(timerDuration);
-  const progressAnim = useRef(new Animated.Value(1)).current;
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Reset timer when modal opens or habit changes
@@ -35,7 +27,6 @@ export default function HabitTimerModal({
     if (visible) {
       setRemainingTime(timerDuration);
       setIsRunning(false);
-      progressAnim.setValue(1);
     }
   }, [visible, habit.id, timerDuration]);
 
@@ -45,14 +36,6 @@ export default function HabitTimerModal({
       intervalRef.current = setInterval(() => {
         setRemainingTime((prev) => {
           const newTime = prev - 1;
-          const progress = newTime / timerDuration;
-
-          // Animate progress bar
-          Animated.timing(progressAnim, {
-            toValue: progress,
-            duration: 1000,
-            useNativeDriver: false,
-          }).start();
 
           if (newTime <= 0) {
             setIsRunning(false);
@@ -79,16 +62,12 @@ export default function HabitTimerModal({
     setIsRunning(!isRunning);
   };
 
-  const resetTimer = () => {
-    setIsRunning(false);
-    setRemainingTime(timerDuration);
-    progressAnim.setValue(1);
-  };
-
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, "0")}`;
+    return `${mins.toString().padStart(2, "0")}:${secs
+      .toString()
+      .padStart(2, "0")}`;
   };
 
   const handleClose = () => {
@@ -124,7 +103,9 @@ export default function HabitTimerModal({
               </View>
               <View style={styles.habitDetails}>
                 <Text style={styles.habitTitle}>{habit.title}</Text>
-                <Text style={styles.habitCategory}>{habit.category}</Text>
+                <Text style={styles.habitCategory}>
+                  {habit.category} • 🔥 {habit.streak}-Day Streak
+                </Text>
               </View>
             </View>
             <TouchableOpacity style={styles.closeButton} onPress={handleClose}>
@@ -132,82 +113,43 @@ export default function HabitTimerModal({
             </TouchableOpacity>
           </View>
 
-          {/* Timer Display */}
+          {/* Large Timer Display */}
           <View style={styles.timerSection}>
-            <Text style={styles.timerText}>{formatTime(remainingTime)}</Text>
-            <Text style={styles.timerLabel}>
-              {remainingTime === 0 ? "Complete!" : "Time Remaining"}
+            <Text style={styles.largeTimerText}>
+              {formatTime(remainingTime)}
             </Text>
           </View>
 
-          {/* Progress Bar */}
-          <View style={styles.progressContainer}>
-            <View style={styles.progressBarBackground}>
-              <Animated.View
-                style={[
-                  styles.progressBar,
-                  {
-                    backgroundColor: habit.iconColor,
-                    width: progressAnim.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: ["0%", "100%"],
-                    }),
-                  },
-                ]}
-              />
-            </View>
-          </View>
+          {/* Start Button */}
+          <TouchableOpacity
+            style={[
+              styles.startButton,
+              { backgroundColor: habit.iconColor },
+              remainingTime === 0 && styles.disabledButton,
+            ]}
+            onPress={toggleTimer}
+            disabled={remainingTime === 0}
+          >
+            <MaterialCommunityIcons
+              name={isRunning ? "pause" : "dumbbell"}
+              size={24}
+              color="white"
+            />
+            <Text style={styles.startButtonText}>
+              {remainingTime === 0
+                ? "Completed"
+                : isRunning
+                ? "Pause"
+                : "Start Workout"}
+            </Text>
+          </TouchableOpacity>
 
-          {/* Control Buttons */}
-          <View style={styles.controlsSection}>
-            <TouchableOpacity
-              style={[
-                styles.primaryButton,
-                { backgroundColor: habit.iconColor },
-                remainingTime === 0 && styles.disabledButton,
-              ]}
-              onPress={toggleTimer}
-              disabled={remainingTime === 0}
-            >
-              <MaterialCommunityIcons
-                name={isRunning ? "pause" : "play"}
-                size={24}
-                color="white"
-              />
-              <Text style={styles.primaryButtonText}>
-                {remainingTime === 0
-                  ? "Completed"
-                  : isRunning
-                  ? "Pause"
-                  : "Start"}
-              </Text>
-            </TouchableOpacity>
-
-            {remainingTime !== timerDuration && (
-              <TouchableOpacity
-                style={styles.secondaryButton}
-                onPress={resetTimer}
-              >
-                <MaterialCommunityIcons name="refresh" size={20} color="#666" />
-                <Text style={styles.secondaryButtonText}>Reset</Text>
-              </TouchableOpacity>
-            )}
-          </View>
-
-          {/* Progress Info */}
-          <View style={styles.progressInfo}>
-            <View style={styles.progressItem}>
-              <MaterialCommunityIcons name="target" size={16} color="#666" />
-              <Text style={styles.progressItemText}>
-                Goal: {habit.dailyGoal}x daily
-              </Text>
-            </View>
-            <View style={styles.progressItem}>
-              <MaterialCommunityIcons name="fire" size={16} color="#ea580c" />
-              <Text style={styles.progressItemText}>
-                {habit.streak} day streak
-              </Text>
-            </View>
+          {/* Goal Info */}
+          <View style={styles.goalSection}>
+            <MaterialCommunityIcons name="chart-line" size={16} color="#666" />
+            <Text style={styles.goalText}>
+              Goal: {habit.dailyGoal} sets/day
+            </Text>
           </View>
         </View>
       </View>
@@ -224,8 +166,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   modalContainer: {
-    width: "100%",
-    maxWidth: 400,
+    width: 300,
     backgroundColor: "white",
     borderRadius: 20,
     padding: 24,
@@ -239,7 +180,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 24,
+    marginBottom: 32,
   },
   habitInfo: {
     flexDirection: "row",
@@ -272,84 +213,40 @@ const styles = StyleSheet.create({
   },
   timerSection: {
     alignItems: "center",
-    marginBottom: 32,
+    marginBottom: 40,
   },
-  timerText: {
-    fontSize: 48,
+  largeTimerText: {
+    fontSize: 56,
     fontWeight: "300",
     color: "#1a1a1a",
-    marginBottom: 8,
     fontFamily: "monospace",
   },
-  timerLabel: {
-    fontSize: 16,
-    color: "#666",
-    fontWeight: "500",
-  },
-  progressContainer: {
-    marginBottom: 32,
-  },
-  progressBarBackground: {
-    height: 8,
-    backgroundColor: "#f0f0f0",
-    borderRadius: 4,
-    overflow: "hidden",
-  },
-  progressBar: {
-    height: "100%",
-    borderRadius: 4,
-  },
-  controlsSection: {
-    alignItems: "center",
-    marginBottom: 24,
-  },
-  primaryButton: {
+  startButton: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 32,
     paddingVertical: 16,
-    borderRadius: 16,
-    marginBottom: 12,
-    minWidth: 140,
+    borderRadius: 50,
+    marginBottom: 32,
+    width: "100%",
   },
-  primaryButtonText: {
+  startButtonText: {
     color: "white",
     fontSize: 16,
     fontWeight: "600",
     marginLeft: 8,
   },
-  secondaryButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 12,
-    backgroundColor: "#f5f5f5",
-  },
-  secondaryButtonText: {
-    color: "#666",
-    fontSize: 14,
-    fontWeight: "500",
-    marginLeft: 6,
-  },
   disabledButton: {
     backgroundColor: "#ccc",
   },
-  progressInfo: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    paddingTop: 16,
-    borderTopWidth: 1,
-    borderTopColor: "#f0f0f0",
-  },
-  progressItem: {
+  goalSection: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
   },
-  progressItemText: {
-    fontSize: 13,
+  goalText: {
+    fontSize: 16,
     color: "#666",
     marginLeft: 6,
   },
