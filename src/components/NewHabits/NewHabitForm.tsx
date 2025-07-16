@@ -1,48 +1,66 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Colors } from "../../constants/Colors";
+import { nanoid } from "nanoid";
+
 import { styles } from "./NewHabitForm.styles";
 
 import ColorSelector from "../Shared/ColorSelector";
 import IconSelector from "../Shared/IconSelector";
 
+import type Habit from "../../types/Habit";
+
 interface NewHabitFormProps {
-  onSave?: (habit: {
-    title: string;
-    category: string;
-    icon: keyof typeof MaterialCommunityIcons.glyphMap;
-    iconColor: string;
-    totalProgress: number;
-  }) => void;
+  onSave?: (habit: Habit) => void;
   onCancel?: () => void;
 }
 
 export default function NewHabitForm({ onSave, onCancel }: NewHabitFormProps) {
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
-  const [selectedColor, setSelectedColor] = useState<string>(Colors.primary);
-  const [selectedIcon, setSelectedIcon] =
-    useState<keyof typeof MaterialCommunityIcons.glyphMap>("star");
-  const [totalProgress, setTotalProgress] = useState("1");
+  const [formState, setFormState] = useState<Habit>({
+    id: "",
+    currentProgress: 0,
+    dailyGoal: 1,
+    streak: 0,
+    createdAt: new Date(),
+    title: "",
+    category: "",
+    iconColor: AppColors.primary,
+    icon: "star",
+    totalProgress: 1,
+  });
   const [colorModalVisible, setColorModalVisible] = useState(false);
   const [iconModalVisible, setIconModalVisible] = useState(false);
 
   const handleSave = () => {
-    if (title.trim() && category.trim()) {
+    if (formState.title.trim() && formState.category.trim()) {
+      _storeDataLocal("habits", formState);
+      const x = _retrieveDataLocal("habits");
+      console.log(x);
       onSave?.({
-        title: title.trim(),
-        category: category.trim(),
-        icon: selectedIcon,
-        iconColor: selectedColor,
-        totalProgress: parseInt(totalProgress) || 1,
+        id: nanoid(),
+        title: formState.title.trim(),
+        category: formState.category.trim(),
+        icon: formState.icon,
+        iconColor: formState.iconColor,
+        currentProgress: 0,
+        totalProgress: formState.dailyGoal,
+        dailyGoal: formState.dailyGoal,
+        streak: 0,
+        createdAt: new Date(),
       });
       // Reset form
-      setTitle("");
-      setCategory("");
-      setSelectedColor(Colors.primary);
-      setSelectedIcon("star");
-      setTotalProgress("1");
+      setFormState({
+        id: "",
+        currentProgress: 0,
+        dailyGoal: 1,
+        streak: 0,
+        createdAt: new Date(),
+        title: "",
+        category: "",
+        iconColor: AppColors.primary,
+        icon: "star",
+        totalProgress: 1,
+      });
     }
   };
 
@@ -55,8 +73,8 @@ export default function NewHabitForm({ onSave, onCancel }: NewHabitFormProps) {
         <Text style={styles.label}>Habit Title</Text>
         <TextInput
           style={styles.textInput}
-          value={title}
-          onChangeText={setTitle}
+          value={formState.title}
+          onChangeText={(title) => setFormState((prev) => ({ ...prev, title }))}
           placeholder="Enter habit title"
           placeholderTextColor="#999"
         />
@@ -67,8 +85,10 @@ export default function NewHabitForm({ onSave, onCancel }: NewHabitFormProps) {
         <Text style={styles.label}>Category</Text>
         <TextInput
           style={styles.textInput}
-          value={category}
-          onChangeText={setCategory}
+          value={formState.category}
+          onChangeText={(category) =>
+            setFormState((prev) => ({ ...prev, category }))
+          }
           placeholder="Enter category"
           placeholderTextColor="#999"
         />
@@ -84,7 +104,10 @@ export default function NewHabitForm({ onSave, onCancel }: NewHabitFormProps) {
             onPress={() => setColorModalVisible(true)}
           >
             <View
-              style={[styles.colorPreview, { backgroundColor: selectedColor }]}
+              style={[
+                styles.colorPreview,
+                { backgroundColor: formState.iconColor },
+              ]}
             />
             <Text style={styles.selectionText}>Choose Color</Text>
           </TouchableOpacity>
@@ -98,10 +121,13 @@ export default function NewHabitForm({ onSave, onCancel }: NewHabitFormProps) {
             onPress={() => setIconModalVisible(true)}
           >
             <View
-              style={[styles.iconPreview, { backgroundColor: selectedColor }]}
+              style={[
+                styles.iconPreview,
+                { backgroundColor: formState.iconColor },
+              ]}
             >
               <MaterialCommunityIcons
-                name={selectedIcon}
+                name={formState.icon}
                 size={16}
                 color="white"
               />
@@ -116,8 +142,13 @@ export default function NewHabitForm({ onSave, onCancel }: NewHabitFormProps) {
         <Text style={styles.label}>Daily Goal</Text>
         <TextInput
           style={styles.textInput}
-          value={totalProgress}
-          onChangeText={setTotalProgress}
+          value={formState.dailyGoal.toString()}
+          onChangeText={(dailyGoal) =>
+            setFormState((prev) => ({
+              ...prev,
+              dailyGoal: parseInt(dailyGoal) || 1,
+            }))
+          }
           placeholder="1"
           placeholderTextColor="#999"
           keyboardType="numeric"
@@ -133,11 +164,12 @@ export default function NewHabitForm({ onSave, onCancel }: NewHabitFormProps) {
         <TouchableOpacity
           style={[
             styles.saveButton,
-            { backgroundColor: selectedColor },
-            (!title.trim() || !category.trim()) && styles.disabledButton,
+            { backgroundColor: formState.iconColor },
+            (!formState.title.trim() || !formState.category.trim()) &&
+              styles.disabledButton,
           ]}
           onPress={handleSave}
-          disabled={!title.trim() || !category.trim()}
+          disabled={!formState.title.trim() || !formState.category.trim()}
         >
           <Text style={styles.saveButtonText}>Save Habit</Text>
         </TouchableOpacity>
@@ -146,15 +178,17 @@ export default function NewHabitForm({ onSave, onCancel }: NewHabitFormProps) {
       <ColorSelector
         colorModalVisible={colorModalVisible}
         setColorModalVisible={setColorModalVisible}
-        selectedColor={selectedColor}
-        setSelectedColor={setSelectedColor}
+        selectedColor={formState.iconColor}
+        setSelectedColor={(iconColor) =>
+          setFormState((prev) => ({ ...prev, iconColor }))
+        }
       />
       <IconSelector
         iconModalVisible={iconModalVisible}
         setIconModalVisible={setIconModalVisible}
-        selectedIcon={selectedIcon}
-        setSelectedIcon={setSelectedIcon}
-        selectedColor={selectedColor}
+        selectedIcon={formState.icon}
+        setSelectedIcon={(icon) => setFormState((prev) => ({ ...prev, icon }))}
+        selectedColor={formState.iconColor}
       />
     </View>
   );

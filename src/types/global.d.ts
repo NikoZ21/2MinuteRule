@@ -6,6 +6,7 @@ import type { Habit } from "../types/Habit";
 declare global {
   var AppColors: typeof Colors;
   const _storeDataLocal = async (key: string, value: Habit) => {
+    console.log("storeDataLocal", key, value);
     try {
       await AsyncStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
