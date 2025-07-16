@@ -2,6 +2,7 @@ import { ScrollView } from "react-native";
 
 import NewHabitForm from "../../../components/NewHabits/NewHabitForm";
 import HabitCard from "../../../components/Shared/HabitCard";
+
 import type Habit from "../../../types/Habit";
 import HabitTimerModal from "../../../components/NewHabits/HabitTimerModal";
 import { useState } from "react";
@@ -48,14 +49,15 @@ export default function GoodHabits() {
   const [timerModalVisible, setTimerModalVisible] = useState(true);
 
   return (
-    <HabitTimerModal
-      visible={timerModalVisible}
-      onClose={() => {
-        setTimerModalVisible(false);
-      }}
-      habit={initialLocalStorageHabits[0]}
-      onTimerComplete={() => {}}
-    />
+    <NewHabitForm />
+    // <HabitTimerModal
+    //   visible={timerModalVisible}
+    //   onClose={() => {
+    //     setTimerModalVisible(false);
+    //   }}
+    //   habit={initialLocalStorageHabits[0]}
+    //   onTimerComplete={() => {}}
+    // />
     // <ScrollView
     //   style={{ width: "100%", marginVertical: 30 }}
     //   contentContainerStyle={{ alignItems: "center" }}
