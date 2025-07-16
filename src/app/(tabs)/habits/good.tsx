@@ -4,52 +4,56 @@ import NewHabitForm from "../../../components/NewHabits/NewHabitForm";
 import HabitCard from "../../../components/Shared/HabitCard";
 
 import type Habit from "../../../types/Habit";
-import HabitTimerModal from "../../../components/NewHabits/HabitTimerModal";
-import { useState } from "react";
+// import HabitTimerModal from "../../../components/NewHabits/HabitTimerModal";
+// import { useState } from "react";
 
-export default function GoodHabits() {
-  const initialLocalStorageHabits: Habit[] = [
-    {
-      id: "1",
-      title: "Daily Exercise",
-      category: "Health",
-      icon: "dumbbell",
-      iconColor: AppColors.primary,
-      currentProgress: 9,
-      totalProgress: 1,
-      dailyGoal: 20,
-      streak: 5,
-      createdAt: new Date(),
-    },
-    {
-      id: "2",
-      title: "Read Books",
-      category: "Learning",
-      icon: "book",
-      iconColor: AppColors.task2,
-      currentProgress: 2,
-      totalProgress: 3,
-      dailyGoal: 3,
-      streak: 12,
-      createdAt: new Date(),
-    },
-    {
-      id: "3",
-      title: "Meditate",
-      category: "Mindfulness",
-      icon: "leaf",
-      iconColor: AppColors.task3,
-      currentProgress: 0,
-      totalProgress: 2,
-      dailyGoal: 2,
-      streak: 0,
-      createdAt: new Date(),
-    },
-  ];
-  const [timerModalVisible, setTimerModalVisible] = useState(true);
+const initialLocalStorageHabits: Habit[] | null = await _retrieveDataLocal(
+  "habits"
+);
+export default async function GoodHabits() {
+  console.log("initialLocalStorageHabits", initialLocalStorageHabits);
+  // [
+  //   {
+  //     id: "1",
+  //     title: "Daily Exercise",
+  //     category: "Health",
+  //     icon: "dumbbell",
+  //     iconColor: AppColors.primary,
+  //     currentProgress: 9,
+  //     totalProgress: 1,
+  //     dailyGoal: 20,
+  //     streak: 5,
+  //     createdAt: new Date(),
+  //   },
+  //   {
+  //     id: "2",
+  //     title: "Read Books",
+  //     category: "Learning",
+  //     icon: "book",
+  //     iconColor: AppColors.task2,
+  //     currentProgress: 2,
+  //     totalProgress: 3,
+  //     dailyGoal: 3,
+  //     streak: 12,
+  //     createdAt: new Date(),
+  //   },
+  //   {
+  //     id: "3",
+  //     title: "Meditate",
+  //     category: "Mindfulness",
+  //     icon: "leaf",
+  //     iconColor: AppColors.task3,
+  //     currentProgress: 0,
+  //     totalProgress: 2,
+  //     dailyGoal: 2,
+  //     streak: 0,
+  //     createdAt: new Date(),
+  //   },
+  // ];
+  // const [timerModalVisible, setTimerModalVisible] = useState(true);
 
   return (
-    <NewHabitForm />
+    // <NewHabitForm />
     // <HabitTimerModal
     //   visible={timerModalVisible}
     //   onClose={() => {
@@ -58,18 +62,18 @@ export default function GoodHabits() {
     //   habit={initialLocalStorageHabits[0]}
     //   onTimerComplete={() => {}}
     // />
-    // <ScrollView
-    //   style={{ width: "100%", marginVertical: 30 }}
-    //   contentContainerStyle={{ alignItems: "center" }}
-    // >
-    //   {initialLocalStorageHabits?.length ? (
-    //     initialLocalStorageHabits.map((habit) => (
-    //       <HabitCard key={habit.id} habit={habit} />
-    //     ))
-    //   ) : (
-    //     <NewHabitForm />
-    //   )}
-    // </ScrollView>
+    <ScrollView
+      style={{ width: "100%", marginVertical: 30 }}
+      contentContainerStyle={{ alignItems: "center" }}
+    >
+      {initialLocalStorageHabits?.length ? (
+        initialLocalStorageHabits.map((habit) => (
+          <HabitCard key={habit.id} habit={habit} />
+        ))
+      ) : (
+        <NewHabitForm />
+      )}
+    </ScrollView>
   );
 }
 

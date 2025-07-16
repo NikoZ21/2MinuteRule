@@ -190,6 +190,10 @@ export default function NewHabitForm({ onSave, onCancel }: NewHabitFormProps) {
         setSelectedIcon={(icon) => setFormState((prev) => ({ ...prev, icon }))}
         selectedColor={formState.iconColor}
       />
+
+      <View>
+        <Text>{JSON.stringify(formState, null, 2)}</Text>
+      </View>
     </View>
   );
 }
