@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from "react";
-import Habit from "../types/Habit";
+import type Habit from "../types/Habit";
 import { HabitsContext, HabitsContextType } from "../contexts/HabitsContext";
 
 interface HabitsProviderProps {
@@ -7,7 +7,7 @@ interface HabitsProviderProps {
 }
 
 // Provider component
-export const HabitsProvider: React.FC<HabitsProviderProps> = ({ children }) => {
+export default function HabitsProvider({ children }: HabitsProviderProps) {
   const [habits, setHabits] = useState<Habit[]>([
     // Sample data for testing
     {
@@ -18,6 +18,8 @@ export const HabitsProvider: React.FC<HabitsProviderProps> = ({ children }) => {
       iconColor: AppColors.primary,
       currentProgress: 3,
       totalProgress: 5,
+      dailyGoal: 5,
+      streak: 0,
       createdAt: new Date(),
     },
     {
@@ -28,6 +30,8 @@ export const HabitsProvider: React.FC<HabitsProviderProps> = ({ children }) => {
       iconColor: AppColors.task2,
       currentProgress: 1,
       totalProgress: 3,
+      dailyGoal: 3,
+      streak: 0,
       createdAt: new Date(),
     },
   ]);
@@ -64,4 +68,4 @@ export const HabitsProvider: React.FC<HabitsProviderProps> = ({ children }) => {
   };
 
   return React.createElement(HabitsContext.Provider, { value }, children);
-};
+}
