@@ -10,20 +10,27 @@ const initialLocalStorageHabits: Habit[] | null = await _retrieveDataLocal(
 );
 export default async function GoodHabits() {
   return (
-    <HabitsProvider>
-      <ScrollView
-        style={{ width: "100%", marginVertical: 30 }}
-        contentContainerStyle={{ alignItems: "center" }}
-      >
-        {initialLocalStorageHabits?.length ? (
-          initialLocalStorageHabits.map((habit) => (
-            <HabitCard key={habit.id} habit={habit} />
-          ))
-        ) : (
-          <NewHabitForm />
-        )}
-      </ScrollView>
-    </HabitsProvider>
+    // <NewHabitForm />
+    // <HabitTimerModal
+    //   visible={timerModalVisible}
+    //   onClose={() => {
+    //     setTimerModalVisible(false);
+    //   }}
+    //   habit={initialLocalStorageHabits[0]}
+    //   onTimerComplete={() => {}}
+    // />
+    <ScrollView
+      style={{ width: "100%", marginVertical: 30 }}
+      contentContainerStyle={{ alignItems: "center" }}
+    >
+      {initialLocalStorageHabits?.length ? (
+        initialLocalStorageHabits.map((habit) => (
+          <HabitCard key={habit.id} habit={habit} />
+        ))
+      ) : (
+        <NewHabitForm />
+      )}
+    </ScrollView>
   );
 }
 
