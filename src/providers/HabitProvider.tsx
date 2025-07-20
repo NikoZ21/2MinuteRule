@@ -10,40 +10,25 @@ interface HabitsProviderProps {
 export default function HabitsProvider({ children }: HabitsProviderProps) {
   const [habits, setHabits] = useState<Habit[]>([]);
 
-  // [
-  //   // Sample data for testing
-  //   {
-  //     id: "1",
-  //     title: "Read Book",
-  //     category: "Education",
-  //     icon: "book",
-  //     iconColor: AppColors.primary,
-  //     currentProgress: 3,
-  //     totalProgress: 5,
-  //     dailyGoal: 5,
-  //     streak: 0,
-  //     createdAt: new Date(),
-  //   },
-  //   {
-  //     id: "2",
-  //     title: "Yoga",
-  //     category: "Health",
-  //     icon: "flower",
-  //     iconColor: AppColors.task2,
-  //     currentProgress: 1,
-  //     totalProgress: 3,
-  //     dailyGoal: 3,
-  //     streak: 0,
-  //     createdAt: new Date(),
-  //   },
-  // ]
-
   useEffect(() => {
+    let isMounted = true;
+
     const fetchHabits = async () => {
-      const habits = await _retrieveDataLocal("habits");
-      setHabits(habits as Habit[]);
+      try {
+        const habits = await _retrieveDataLocal("habits");
+        if (isMounted) {
+          setHabits(habits as Habit[]);
+          console.log("habits", habits);
+        }
+      } catch (error) {
+        console.error("Error fetching habits:", error);
+      }
     };
     fetchHabits();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   // Add new habit

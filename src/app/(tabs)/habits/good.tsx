@@ -3,26 +3,11 @@ import { ScrollView } from "react-native";
 import NewHabitForm from "../../../components/NewHabits/NewHabitForm";
 import HabitCard from "../../../components/Shared/HabitCard";
 
-import type Habit from "../../../types/Habit";
-import HabitsProvider from "../../../providers/HabitProvider";
+import { useHabits } from "../../../contexts/HabitsContext";
 
 export default async function GoodHabits() {
-  const initialLocalStorageHabits: Habit[] = [
-    {
-      id: "1",
-      title: "Good Habit",
-      category: "Good",
-      icon: "star-face",
-      iconColor: "green",
-      currentProgress: 0,
-      totalProgress: 100,
-      dailyGoal: 10,
-      streak: 0,
-      createdAt: new Date(),
-    },
-  ];
+  const habitContext = useHabits();
   return (
-    // <NewHabitForm />
     // <HabitTimerModal
     //   visible={timerModalVisible}
     //   onClose={() => {
@@ -31,20 +16,18 @@ export default async function GoodHabits() {
     //   habit={initialLocalStorageHabits[0]}
     //   onTimerComplete={() => {}}
     // />
-    <HabitsProvider>
-      <ScrollView
-        style={{ width: "100%", marginVertical: 30 }}
-        contentContainerStyle={{ alignItems: "center" }}
-      >
-        {initialLocalStorageHabits?.length ? (
-          initialLocalStorageHabits.map((habit) => (
-            <HabitCard key={habit.id} habit={habit} />
-          ))
-        ) : (
-          <NewHabitForm />
-        )}
-      </ScrollView>
-    </HabitsProvider>
+    <ScrollView
+      style={{ width: "100%", marginVertical: 30 }}
+      contentContainerStyle={{ alignItems: "center" }}
+    >
+      {habitContext.habits?.length ? (
+        habitContext.habits.map((habit) => (
+          <HabitCard key={habit.id} habit={habit} />
+        ))
+      ) : (
+        <NewHabitForm />
+      )}
+    </ScrollView>
   );
 }
 
