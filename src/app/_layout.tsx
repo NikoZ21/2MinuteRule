@@ -8,6 +8,7 @@ global.AppColors = Colors;
 global._storeDataLocal = async (key: string, value: Habit) => {
   console.log("storeDataLocal", key, value);
   try {
+    console.log("storeDataLocal", key, value);
     await AsyncStorage.setItem(key, JSON.stringify(value));
   } catch (error) {
     console.error(error);

@@ -9,6 +9,7 @@ import ColorSelector from "../Shared/ColorSelector";
 import IconSelector from "../Shared/IconSelector";
 
 import type Habit from "../../types/Habit";
+import { useHabits } from "../../contexts/HabitsContext";
 
 interface NewHabitFormProps {
   onSave?: (habit: Habit) => void;
@@ -16,6 +17,7 @@ interface NewHabitFormProps {
 }
 
 export default function NewHabitForm({ onSave, onCancel }: NewHabitFormProps) {
+  const habitsContext = useHabits();
   const [formState, setFormState] = useState<Habit>({
     id: "",
     currentProgress: 0,

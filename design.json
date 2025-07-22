@@ -1,0 +1,320 @@
+{
+  "designSystem": {
+    "name": "Educational App Design System",
+    "version": "1.0",
+    "category": "Mobile Learning Platform",
+    "designPhilosophy": "Modern, friendly, and gamified educational interface with card-based layouts"
+  },
+
+  "colorPalette": {
+    "primary": {
+      "purple": "#6366F1",
+      "violet": "#8B5CF6",
+      "blue": "#3B82F6"
+    },
+    "secondary": {
+      "orange": "#FB923C",
+      "coral": "#FF7849",
+      "peach": "#FED7AA"
+    },
+    "accent": {
+      "yellow": "#FCD34D",
+      "green": "#34D399",
+      "pink": "#F472B6"
+    },
+    "neutrals": {
+      "background": "#FEF3E2",
+      "cardBackground": "#FFFFFF",
+      "textPrimary": "#1F2937",
+      "textSecondary": "#6B7280",
+      "border": "#E5E7EB"
+    }
+  },
+
+  "typography": {
+    "fontFamily": "System UI, -apple-system, sans-serif",
+    "hierarchy": {
+      "h1": {
+        "fontSize": "24px",
+        "fontWeight": "700",
+        "lineHeight": "1.2"
+      },
+      "h2": {
+        "fontSize": "20px",
+        "fontWeight": "600",
+        "lineHeight": "1.3"
+      },
+      "body": {
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "1.5"
+      },
+      "caption": {
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "lineHeight": "1.4"
+      },
+      "small": {
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "lineHeight": "1.3"
+      }
+    }
+  },
+
+  "layoutSystem": {
+    "containerTypes": {
+      "mobileFrame": {
+        "width": "375px",
+        "maxWidth": "414px",
+        "aspectRatio": "9:19.5",
+        "padding": "20px"
+      },
+      "cardGrid": {
+        "display": "grid",
+        "gap": "16px",
+        "gridTemplateColumns": "repeat(auto-fit, minmax(160px, 1fr))"
+      },
+      "dashboardLayout": {
+        "display": "flex",
+        "flexDirection": "column",
+        "gap": "24px"
+      }
+    },
+
+    "spacing": {
+      "xs": "4px",
+      "sm": "8px",
+      "md": "16px",
+      "lg": "24px",
+      "xl": "32px",
+      "xxl": "48px"
+    }
+  },
+
+  "componentPatterns": {
+    "cards": {
+      "baseCard": {
+        "borderRadius": "16px",
+        "padding": "20px",
+        "backgroundColor": "#FFFFFF",
+        "boxShadow": "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+        "border": "none"
+      },
+      "heroCard": {
+        "extends": "baseCard",
+        "backgroundGradient": "linear-gradient(135deg, #6366F1, #8B5CF6)",
+        "color": "#FFFFFF",
+        "minHeight": "160px",
+        "position": "relative"
+      },
+      "statsCard": {
+        "extends": "baseCard",
+        "textAlign": "center",
+        "minHeight": "80px",
+        "backgroundGradient": "linear-gradient(135deg, #FB923C, #FF7849)"
+      },
+      "progressCard": {
+        "extends": "baseCard",
+        "minHeight": "120px"
+      }
+    },
+
+    "buttons": {
+      "primary": {
+        "backgroundColor": "#1F2937",
+        "color": "#FFFFFF",
+        "borderRadius": "24px",
+        "padding": "12px 24px",
+        "fontSize": "14px",
+        "fontWeight": "600",
+        "border": "none"
+      },
+      "icon": {
+        "width": "40px",
+        "height": "40px",
+        "borderRadius": "50%",
+        "backgroundColor": "rgba(255, 255, 255, 0.2)",
+        "border": "none",
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center"
+      }
+    },
+
+    "navigation": {
+      "bottomNav": {
+        "position": "fixed",
+        "bottom": "20px",
+        "left": "50%",
+        "transform": "translateX(-50%)",
+        "backgroundColor": "#1F2937",
+        "borderRadius": "24px",
+        "padding": "8px 16px",
+        "display": "flex",
+        "gap": "16px"
+      },
+      "navDot": {
+        "width": "8px",
+        "height": "8px",
+        "borderRadius": "50%",
+        "backgroundColor": "#6B7280"
+      },
+      "navDotActive": {
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+
+    "dataVisualization": {
+      "progressBar": {
+        "height": "8px",
+        "borderRadius": "4px",
+        "backgroundColor": "#E5E7EB",
+        "overflow": "hidden"
+      },
+      "progressFill": {
+        "height": "100%",
+        "borderRadius": "4px",
+        "backgroundGradient": "linear-gradient(90deg, #FB923C, #6366F1)"
+      },
+      "chartBar": {
+        "borderRadius": "8px 8px 4px 4px",
+        "minHeight": "20px",
+        "backgroundColor": "#FB923C"
+      }
+    },
+
+    "avatars": {
+      "user": {
+        "width": "40px",
+        "height": "40px",
+        "borderRadius": "50%",
+        "border": "2px solid #FFFFFF"
+      },
+      "small": {
+        "width": "24px",
+        "height": "24px",
+        "borderRadius": "50%"
+      }
+    },
+
+    "badges": {
+      "notification": {
+        "width": "8px",
+        "height": "8px",
+        "borderRadius": "50%",
+        "backgroundColor": "#EF4444",
+        "position": "absolute",
+        "top": "0",
+        "right": "0"
+      },
+      "count": {
+        "backgroundColor": "#1F2937",
+        "color": "#FFFFFF",
+        "borderRadius": "12px",
+        "padding": "4px 8px",
+        "fontSize": "12px",
+        "fontWeight": "600"
+      }
+    }
+  },
+
+  "iconography": {
+    "style": "Rounded, friendly icons",
+    "strokeWidth": "2px",
+    "size": {
+      "small": "16px",
+      "medium": "24px",
+      "large": "32px"
+    },
+    "commonIcons": [
+      "trophy",
+      "graduation-cap",
+      "book-open",
+      "chart-bar",
+      "star",
+      "users",
+      "play-circle",
+      "arrow-right"
+    ]
+  },
+
+  "interactionPatterns": {
+    "cardHover": {
+      "transform": "translateY(-2px)",
+      "boxShadow": "0 8px 25px -8px rgba(0, 0, 0, 0.15)",
+      "transition": "all 0.3s ease"
+    },
+    "buttonHover": {
+      "transform": "scale(1.02)",
+      "transition": "transform 0.2s ease"
+    },
+    "cardTap": {
+      "transform": "scale(0.98)",
+      "transition": "transform 0.1s ease"
+    }
+  },
+
+  "contentStructure": {
+    "header": {
+      "greeting": "Personal greeting with user name",
+      "progress": "Progress percentage or streak counter",
+      "avatar": "User profile image",
+      "notifications": "Badge or indicator"
+    },
+    "mainContent": {
+      "heroSection": "Primary action or achievement showcase",
+      "quickStats": "2-3 key metrics in compact cards",
+      "courseGrid": "Grid of course/subject cards",
+      "progressSection": "Detailed progress visualization",
+      "socialProof": "Community or peer elements"
+    },
+    "cardContent": {
+      "title": "Clear, action-oriented headlines",
+      "metrics": "Numbers with context/labels",
+      "visual": "Icons, illustrations, or progress indicators",
+      "action": "Clear next step or CTA"
+    }
+  },
+
+  "responsiveGuidelines": {
+    "breakpoints": {
+      "mobile": "320px - 480px",
+      "tablet": "481px - 768px",
+      "desktop": "769px+"
+    },
+    "adaptations": {
+      "mobile": "Single column, full-width cards, bottom navigation",
+      "tablet": "2-column grid, larger cards, side navigation option",
+      "desktop": "Multi-column layout, sidebar navigation, expanded content"
+    }
+  },
+
+  "accessibilityFeatures": {
+    "colorContrast": "WCAG AA compliant (4.5:1 minimum)",
+    "focusStates": "Clear focus indicators on interactive elements",
+    "semanticStructure": "Proper heading hierarchy and landmark roles",
+    "textAlternatives": "Alt text for decorative icons and images",
+    "touchTargets": "Minimum 44px touch targets"
+  },
+
+  "designPrinciples": [
+    "Gamification through progress visualization and achievement showcasing",
+    "Card-based information architecture for easy scanning",
+    "Warm, approachable color palette with high contrast for readability",
+    "Clear hierarchy through typography and spacing",
+    "Mobile-first responsive design",
+    "Consistent use of rounded corners and soft shadows",
+    "Integration of social elements for motivation",
+    "Clear visual feedback for user actions and progress"
+  ],
+
+  "implementationNotes": {
+    "frameworks": "Compatible with React Native, Flutter, or native iOS/Android",
+    "designTokens": "All values should be stored as design tokens for consistency",
+    "darkMode": "Consider dark mode variants for all colors and components",
+    "animations": "Subtle micro-interactions enhance the learning experience",
+    "performance": "Optimize images and use appropriate loading states",
+    "localization": "Design system should accommodate different text lengths"
+  }
+}
